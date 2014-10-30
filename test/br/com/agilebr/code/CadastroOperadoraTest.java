@@ -29,14 +29,14 @@ public class CadastroOperadoraTest {
 
 	@Test
 	public void naoDeveCadastrarOperadoraVisaQuandoForCastrarVisaMasBandeiraPassadaForDiferente() {
-		Operadora visa = buildOperadora("M", true, null, null);
-		Assert.assertFalse(cadastroOperadora.cadastrarVisa(visa));
+		Operadora master = buildOperadora("M", true, null, null);
+		Assert.assertFalse(cadastroOperadora.cadastrarVisa(master));
 	}
 
 	@Test
 	public void naoDeveCadastrarOperadoraMasterQuandoForCastrarMasterMasBandeiraPassadaForDiferente() {
-		Operadora master = buildOperadora("V", true, null, null);
-		Assert.assertFalse(cadastroOperadora.cadastrarMaster(master));
+		Operadora visa = buildOperadora("V", true, null, null);
+		Assert.assertFalse(cadastroOperadora.cadastrarMaster(visa));
 	}
 
 	@Test
