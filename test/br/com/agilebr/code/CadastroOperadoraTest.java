@@ -29,25 +29,20 @@ public class CadastroOperadoraTest {
 
 	@Test
 	public void naoDeveCadastrarOperadoraVisaQuandoForCastrarVisaMasBandeiraPassadaForDiferente() {
-		Operadora master = buildOperadora("M", true, null, null);
+		Operadora master = buildOperadora("M", true, null);
 		Assert.assertFalse(cadastroOperadora.cadastrarVisa(master));
 	}
 
 	@Test
 	public void naoDeveCadastrarOperadoraMasterQuandoForCastrarMasterMasBandeiraPassadaForDiferente() {
-		Operadora visa = buildOperadora("V", true, null, null);
+		Operadora visa = buildOperadora("V", true, null);
 		Assert.assertFalse(cadastroOperadora.cadastrarMaster(visa));
 	}
 
-	@Test
-	public void naoDeveCadastrarOperadoraSodexoQuandoForCastrarSodexoMasBandeiraPassadaForDiferente() {
-		Operadora master = buildOperadora("M", true, null, null);
-		Assert.assertFalse(cadastroOperadora.cadastrarSodexo(master));
-	}
 
 	@Test
 	public void deveSerCobradoApenasTaxaAdesaoQuandoPossuirPlanoAnuidadeParaVisa() {
-		Operadora visa = buildOperadora("V", true, null, null);
+		Operadora visa = buildOperadora("V", true, null);
 		cadastroOperadora.cadastrarVisa(visa);
 		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
@@ -57,7 +52,7 @@ public class CadastroOperadoraTest {
 
 	@Test
 	public void deveSerCobradoTaxaAdesaoMaisAdicionalEmpresaQuandoNaoPossuirPlanoAnuidadeParaVisa() {
-		Operadora visa = buildOperadora("V", false, null, null);
+		Operadora visa = buildOperadora("V", false, null);
 		cadastroOperadora.cadastrarVisa(visa);
 		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
@@ -66,7 +61,7 @@ public class CadastroOperadoraTest {
 
 	@Test
 	public void deveSerCobradoTaxaAdesaoQuandoNaoPossuirLiberacaoTaxaParaMaster() {
-		Operadora visa = buildOperadora("M", true, false, null);
+		Operadora visa = buildOperadora("M", true, false);
 		cadastroOperadora.cadastrarMaster(visa);
 		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
@@ -76,7 +71,7 @@ public class CadastroOperadoraTest {
 
 	@Test
 	public void naoDeveSerCobradoTaxaAdesaoQuandoPossuirLiberacaoTaxaParaMaster() {
-		Operadora visa = buildOperadora("M", true, true, null);
+		Operadora visa = buildOperadora("M", true, true);
 		cadastroOperadora.cadastrarMaster(visa);
 		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
@@ -84,37 +79,14 @@ public class CadastroOperadoraTest {
 
 	}
 
-	@Test
-	public void deveSerCobradoTaxaAdesaoTaxEmpresaTaxaAlimentacaoQuandoForSodexoAlimentacao() {
-		Operadora sodexo = buildOperadora("S", true, true, 1);
-		cadastroOperadora.cadastrarSodexo(sodexo);
-		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
-		Assert.assertTrue(new BigDecimal(9.5).compareTo(operadoraCaptor.getValue().getTaxaPagamento()) == 0);
-	}
 
-	@Test
-	public void deveSerCobradoTaxaAdesaoTaxEmpresaQuandoForSodexoRefeicao() {
-		Operadora sodexo = buildOperadora("S", true, true, 2);
-		cadastroOperadora.cadastrarSodexo(sodexo);
-		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
-		Assert.assertTrue(new BigDecimal(7).compareTo(operadoraCaptor.getValue().getTaxaPagamento()) == 0);
-
-	}
-
-	@Test
-	public void naoDeveCadastrarOperadoraSodexoQuandoForPassadoUmTipoDeValeInvalido() {
-		Operadora master = buildOperadora("S", true, null, 3);
-		Assert.assertFalse(cadastroOperadora.cadastrarSodexo(master));
-	}
-
-	private Operadora buildOperadora(String bandeira, Boolean planoAnuidade,Boolean liberacaoTaxa, Integer tipoOperadoraSodexo) {
+	private Operadora buildOperadora(String bandeira, Boolean planoAnuidade,Boolean liberacaoTaxa) {
 		Operadora operadora = new Operadora();
 		operadora.setBandeira(bandeira);
 		operadora.setAnuidadeVisa(planoAnuidade);
 		operadora.setLiberacaoTaxaMaster(liberacaoTaxa);
-		operadora.setTipoCartaoSodexo(tipoOperadoraSodexo);
 		return operadora;
 	}
 
