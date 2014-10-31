@@ -13,7 +13,7 @@ Nosso négocio vem dando muito certo, e novas bandeiras estão por surgir. Neste
 **Para Visa possuímos a segiunte regra:**
 
 1. Quem possui plano anual a cobrança é de 5.5%
-2. Quem não possui plano anual a cobrança é de 5.5% mais uma taxa adicional de 2.5%
+2. Quem não possui plano anual a cobrança é de 5.5% mais uma taxa adicional de 5.5%
 
 **Para Mastercard possuímos a seguinte regra:**
 
