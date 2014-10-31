@@ -6,7 +6,7 @@ Este workshop consiste em realizar um refactoring neste código legado no qual a
 
 ##Problema:
 
-Nós somos uma empresa que trabalhamos com autorização online para as empresas de comércio eletrônico permitirem o  pagamento por cartão de crédito. Como estamos começando neste nicho de négocio, por enquanto só temos duas bandeiras cadastradas Visa e Mastercard onde cada uma delas possui suas regras específicas.
+Nós somos uma empresa que trabalhamos com autorização online para  que as empresas de comércio eletrônico permitirem o pagamento por cartão de crédito. Como estamos começando neste nicho de négocio, por enquanto só temos duas bandeiras cadastradas Visa e Mastercard onde cada uma delas possui suas regras específicas.
 
 Nosso négocio vem dando muito certo, e novas bandeiras estão por surgir. Neste momento precisamos também aceitar a American Express porque temos muitos clientes solicitando este tipo de pagamento.
 
@@ -18,7 +18,7 @@ Nosso négocio vem dando muito certo, e novas bandeiras estão por surgir. Neste
 **Para Mastercard possuímos a seguinte regra:**
 
 1. Quem possui isenção não paga nenhuma taxa
-2. Quem não possuir isenção, a cobrança é de 5.5% mais uma taxa adicional de 3.5%
+2. Quem não possuir isenção, a cobrança é de 5.5% mais uma taxa adicional de 2.5%
 
 **Para o American Express precisamos da seguinte regra:**
 
