@@ -1,12 +1,13 @@
 package br.com.agilebr.code;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.math.BigDecimal;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -27,16 +28,16 @@ public class CadastroOperadoraTest {
 		cadastroOperadora = new CadastroOperadora(servicoLegado);
 	}
 
-	@Test
+	@Test(expected = ServicoException.class)
 	public void naoDeveCadastrarOperadoraVisaQuandoForCastrarVisaMasBandeiraPassadaForDiferente() {
 		Operadora master = buildOperadora("M", true, null);
-		Assert.assertFalse(cadastroOperadora.cadastrarVisa(master));
+		cadastroOperadora.cadastrarVisa(master);
 	}
 
-	@Test
+	@Test(expected = ServicoException.class)
 	public void naoDeveCadastrarOperadoraMasterQuandoForCastrarMasterMasBandeiraPassadaForDiferente() {
 		Operadora visa = buildOperadora("V", true, null);
-		Assert.assertFalse(cadastroOperadora.cadastrarMaster(visa));
+		cadastroOperadora.cadastrarMaster(visa);
 	}
 
 
@@ -46,7 +47,7 @@ public class CadastroOperadoraTest {
 		cadastroOperadora.cadastrarVisa(visa);
 		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
-		Assert.assertEquals(new BigDecimal(5.5), operadoraCaptor.getValue().getTaxaPagamento());
+		assertEquals(new BigDecimal(5.5), operadoraCaptor.getValue().getTaxaPagamento());
 
 	}
 
@@ -56,7 +57,7 @@ public class CadastroOperadoraTest {
 		cadastroOperadora.cadastrarVisa(visa);
 		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
-		Assert.assertTrue(new BigDecimal(11).compareTo(operadoraCaptor.getValue().getTaxaPagamento()) == 0);
+		assertTrue(new BigDecimal(11).compareTo(operadoraCaptor.getValue().getTaxaPagamento()) == 0);
 	}
 
 	@Test
@@ -65,7 +66,7 @@ public class CadastroOperadoraTest {
 		cadastroOperadora.cadastrarMaster(visa);
 		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
-		Assert.assertTrue(new BigDecimal(8).compareTo(operadoraCaptor.getValue().getTaxaPagamento()) == 0);
+		assertTrue(new BigDecimal(8).compareTo(operadoraCaptor.getValue().getTaxaPagamento()) == 0);
 
 	}
 
@@ -75,11 +76,9 @@ public class CadastroOperadoraTest {
 		cadastroOperadora.cadastrarMaster(visa);
 		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
-		Assert.assertTrue(new BigDecimal(0).compareTo(operadoraCaptor.getValue().getTaxaPagamento()) == 0);
+		assertTrue(new BigDecimal(0).compareTo(operadoraCaptor.getValue().getTaxaPagamento()) == 0);
 
 	}
-
-
 
 
 	private Operadora buildOperadora(String bandeira, Boolean planoAnuidade,Boolean liberacaoTaxa) {

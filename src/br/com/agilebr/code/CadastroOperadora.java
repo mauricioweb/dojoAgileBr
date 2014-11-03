@@ -13,34 +13,33 @@ public class CadastroOperadora {
 		this.servicoLegado = servicoLegado;
 	}
 
-	public boolean cadastrarVisa(Operadora visa){
+	public void cadastrarVisa(Operadora visa){
 		if(!visa.getBandeira().equals("V"))
-			return false;
+			throw new ServicoException("Operadora inv√°lida");
 		BigDecimal taxaPagamento = new BigDecimal(0);
 		if(visa.getAnuidadeVisa()){
-			//para quem possuir plano anual não eh cobrado a taxa adicional da empresa
+			//para quem possuir plano anual n√£o √© cobrado a taxa adicional da empresa
 			taxaPagamento = new BigDecimal(5.5);
 		}else{
-			//para quem não possuir plano anual eh cobrado a taxa adicional da empresa
+			//para quem n√£o possuir plano anual √© cobrado a taxa adicional da empresa
 			taxaPagamento = new BigDecimal(5.5).add(new BigDecimal(5.5));
 		}
 		visa.setTaxaPagamento(taxaPagamento);
 		servicoLegado.cadastrarOperadora(visa);
-		return true;
 	}
 	
 
-	public boolean cadastrarMaster(Operadora master){
+	public void cadastrarMaster(Operadora master){
 		if(!master.getBandeira().equals("M"))
-			return false;
+			throw new ServicoException("Operadora inv√°lida");
+		
 		BigDecimal taxaPagamento = new BigDecimal(0);
 		if(!master.getLiberacaoTaxaMaster()){
-			// se não possuir liberação da taxa é cobrada a taxa com o adicional da empresa
+			// se n√£o possuir libera√ß√£ da taxa √© cobrada a taxa com o adicional da empresa
 			taxaPagamento = new BigDecimal(5.5).add(new BigDecimal(2.5));
 		}
 		master.setTaxaPagamento(taxaPagamento);
 		servicoLegado.cadastrarOperadora(master);
-		return true;
 	}
 
 }
