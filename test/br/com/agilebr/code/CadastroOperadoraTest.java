@@ -1,7 +1,6 @@
 package br.com.agilebr.code;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -57,26 +56,26 @@ public class CadastroOperadoraTest {
 		cadastroOperadora.cadastrarVisa(visa);
 		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
-		assertTrue(new BigDecimal(11).compareTo(operadoraCaptor.getValue().getTaxaPagamento()) == 0);
+		assertEquals(new BigDecimal("11.0"), operadoraCaptor.getValue().getTaxaPagamento());
 	}
 
 	@Test
 	public void deveSerCobradoTaxaAdesaoQuandoNaoPossuirLiberacaoTaxaParaMaster() {
-		Operadora visa = buildOperadora("M", true, false);
-		cadastroOperadora.cadastrarMaster(visa);
+		Operadora master = buildOperadora("M", true, false);
+		cadastroOperadora.cadastrarMaster(master);
 		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
-		assertTrue(new BigDecimal(8).compareTo(operadoraCaptor.getValue().getTaxaPagamento()) == 0);
+		assertEquals(new BigDecimal("8.0"), operadoraCaptor.getValue().getTaxaPagamento());
 
 	}
 
 	@Test
 	public void naoDeveSerCobradoTaxaAdesaoQuandoPossuirLiberacaoTaxaParaMaster() {
-		Operadora visa = buildOperadora("M", true, true);
-		cadastroOperadora.cadastrarMaster(visa);
+		Operadora master = buildOperadora("M", true, true);
+		cadastroOperadora.cadastrarMaster(master);
 		verify(servicoLegado, atLeastOnce()).cadastrarOperadora(operadoraCaptor.capture());
 
-		assertTrue(new BigDecimal(0).compareTo(operadoraCaptor.getValue().getTaxaPagamento()) == 0);
+		assertEquals(new BigDecimal(0),operadoraCaptor.getValue().getTaxaPagamento());
 
 	}
 
